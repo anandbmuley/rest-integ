@@ -1,0 +1,37 @@
+[
+  {
+    "id": "5cb0e8896115cb3447077259",
+    "name": "Vodafone",
+    "imageName": null,
+    "frequency": "MONTHLY",
+    "status": "UNPAID"
+  },
+  {
+    "id": "5cb0e8e86115cb35417ca6ec",
+    "name": "Airtel",
+    "imageName": null,
+    "frequency": "MONTHLY",
+    "status": "UNPAID"
+  },
+  {
+    "id": "5cb0e8f06115cb35417ca6ed",
+    "name": "BSNL",
+    "imageName": null,
+    "frequency": "MONTHLY",
+    "status": "UNPAID"
+  },
+  {
+    "id": "5cb4e31e6115cb2cec667969",
+    "name": "MSEB",
+    "imageName": null,
+    "frequency": "MONTHLY",
+    "status": "UNPAID"
+  },
+  {
+    "id": "5cfc22b76115cb5c199f5197",
+    "name": "General Bill",
+    "imageName": null,
+    "frequency": "QUARTERLY",
+    "status": "UNPAID"
+  }
+]

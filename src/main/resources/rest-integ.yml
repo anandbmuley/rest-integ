@@ -1,0 +1,10 @@
+ServiceName: REST Integrator
+Version: 1.2.3
+BasePath: http://localhost:8080/home-automation/api
+APIS:
+  - name: Get Bills
+    path: /bills
+    method: GET
+    tests:
+      - name: Should get all bills successfully
+        response: get-all-bills-response.json
