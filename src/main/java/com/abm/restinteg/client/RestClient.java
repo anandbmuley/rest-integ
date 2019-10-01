@@ -1,27 +1,35 @@
 package com.abm.restinteg.client;
 
+import com.abm.restinteg.models.ApiRequest;
 import com.abm.restinteg.models.ApiResponse;
+import com.abm.restinteg.models.config.ExpectedResponse;
+import com.abm.restinteg.validators.ResponseValidatorFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Map;
+import static com.abm.restinteg.client.HttpRequestFactory.get;
 
 public class RestClient {
 
-    private RestTemplate restTemplate;
+    protected RestTemplate restTemplate;
+    private ResponseEntity<ApiResponse> apiResponseResponseEntity;
+    private ApiRequest apiRequest;
 
-    public RestClient() {
-        restTemplate = new RestTemplate();
+    public RestClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-    public ApiResponse call(String url) {
-        List<Map<String, Object>> data = restTemplate.getForObject(url, List.class);
-        return new ApiResponse(data);
+    public RestClient call(ApiRequest apiRequest) {
+        apiResponseResponseEntity = get(apiRequest).call(apiRequest);
+        this.apiRequest = apiRequest;
+        return this;
     }
 
-    public static void main(String[] args) {
-        RestClient restClient = new RestClient();
-        System.out.println(restClient.call("http://localhost:8080/home-automation/api/bills"));
+    public void validate(ExpectedResponse expectedResponse) throws Exception {
+        ResponseValidatorFactory
+                .get(apiRequest.getHttpMethod())
+                .validate(apiResponseResponseEntity,expectedResponse);
+
     }
 
 }

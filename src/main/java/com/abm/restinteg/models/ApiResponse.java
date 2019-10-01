@@ -1,34 +1,18 @@
 package com.abm.restinteg.models;
 
+import com.abm.restinteg.models.config.ExpectedResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.List;
-import java.util.Map;
+public abstract class ApiResponse {
 
-public class ApiResponse {
+    protected ObjectMapper mapper;
 
-    private List<Map<String, Object>> data;
-    private ObjectMapper mapper;
-
-    private ApiResponse() {
+    protected ApiResponse() {
         mapper = new ObjectMapper();
     }
 
-    public ApiResponse(List<Map<String, Object>> data) {
-        this();
-        this.data = data;
-    }
+    public abstract int size();
 
-    public int size() {
-        return data.size();
-    }
-
-    public void validate(String expectedResponse) throws Exception {
-        List<Map<String, Object>> expectedResponseData = mapper.readValue(expectedResponse, List.class);
-        if (expectedResponseData.size() != size()) {
-            throw new Exception("Assertion error");
-        }
-    }
-
+    public abstract void validate(ExpectedResponse expectedResponse) throws Exception;
 
 }

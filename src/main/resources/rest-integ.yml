@@ -7,4 +7,27 @@ APIS:
     method: GET
     tests:
       - name: Should get all bills successfully
-        response: get-all-bills-response.json
+        request:
+          responseIsList: true
+        response:
+          body: get-all-bills-response.json
+          status: 200
+
+  - name: Summary API
+    path: /bills/summary
+    method: GET
+    tests:
+      - name: Should return the bills summary successfully
+        response:
+          body: bill-summary-response.json
+          status: 200
+#
+#  - name: Add Bill
+#    path: /bills
+#    method: POST
+#    tests:
+#      - name: Should add all bills successfully
+#        request:
+#          body: add-bill-request.json
+#        response:
+#          status: 200

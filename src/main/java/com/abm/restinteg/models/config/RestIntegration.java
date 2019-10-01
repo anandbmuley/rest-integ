@@ -1,10 +1,10 @@
-package com.abm.restinteg.models;
+package com.abm.restinteg.models.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class RestIntegConfig {
+public class RestIntegration {
 
     @JsonProperty("ServiceName")
     private String serviceName;
