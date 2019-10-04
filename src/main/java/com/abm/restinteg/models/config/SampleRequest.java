@@ -3,6 +3,8 @@ package com.abm.restinteg.models.config;
 import com.abm.restinteg.fileio.FileLoader;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Optional;
+
 public class SampleRequest {
 
     @JsonProperty("body")
@@ -18,8 +20,9 @@ public class SampleRequest {
         fileLoader = new FileLoader();
     }
 
-    public String getBody() {
-        return fileLoader.loadFile(requestFileLocation, FileLoader.FileType.REQUEST);
+    public Optional<String> getBody() {
+        return Optional.ofNullable(requestFileLocation)
+                .map($ -> fileLoader.loadFile(requestFileLocation, FileLoader.FileType.REQUEST));
     }
 
     public boolean isList() {

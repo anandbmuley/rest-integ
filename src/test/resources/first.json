@@ -1,4 +1,24 @@
 {
   "name": "John Doe",
-  "emailId": "johndoe@gmail.com"
+  "emailId": "johndoe@gmail.com",
+  "salary": 1000,
+  "address": {
+    "line1": "high street",
+    "city": "London",
+    "country": "England"
+  },
+  "contact": [
+    "+91-7040070800",
+    "+91-7090090800"
+  ],
+  "insurances": [
+    {
+      "id": 101,
+      "name": "LIC"
+    },
+    {
+      "id": 102,
+      "name": "ICICI Lombard"
+    }
+  ]
 }

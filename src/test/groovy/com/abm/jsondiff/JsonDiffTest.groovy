@@ -9,11 +9,11 @@ class JsonDiffTest extends Specification {
 
     JsonDiff jsonDiff
 
-    def setup(){
+    def setup() {
         jsonDiff = new JsonDiff()
     }
 
-    def "diff"() {
+    def "diff - should find the"() {
         given:
         JSONObject first = load("first.json")
         JSONObject second = load("second.json")

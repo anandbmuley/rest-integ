@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 
 public class PostRequest extends HttpRequest {
 
@@ -14,7 +15,7 @@ public class PostRequest extends HttpRequest {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) {
+    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(apiRequest.getBody(), httpHeaders);

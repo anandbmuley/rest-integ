@@ -24,11 +24,15 @@ public class RestIntegrator {
         init();
     }
 
-    private void init() throws Exception {
+    private void init() {
         mapper = new ObjectMapper(new YAMLFactory());
         loadConfig();
         configureBeans();
-        invokeTests();
+        try {
+            invokeTests();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private void invokeTests() throws Exception {

@@ -5,6 +5,7 @@ import com.abm.restinteg.models.ApiResponse;
 import com.abm.restinteg.models.ListResponse;
 import com.abm.restinteg.models.MapResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class GetRequest extends HttpRequest {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) {
+    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) throws RestClientException {
         if (apiRequest.isResponseListData()) {
             ResponseEntity<List> entity = restTemplate.getForEntity(url, List.class);
             return ResponseEntity

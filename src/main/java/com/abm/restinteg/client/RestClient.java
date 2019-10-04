@@ -5,7 +5,10 @@ import com.abm.restinteg.models.ApiResponse;
 import com.abm.restinteg.models.config.ExpectedResponse;
 import com.abm.restinteg.validators.ResponseValidatorFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.ConnectException;
 
 import static com.abm.restinteg.client.HttpRequestFactory.get;
 
@@ -20,7 +23,12 @@ public class RestClient {
     }
 
     public RestClient call(ApiRequest apiRequest) {
-        apiResponseResponseEntity = get(apiRequest).call(apiRequest);
+        try {
+            apiResponseResponseEntity = get(apiRequest).call(apiRequest);
+        } catch (RestClientException e) {
+            System.err.println("UNABLE TO CONNECT TO SERVICE...");
+            throw e;
+        }
         this.apiRequest = apiRequest;
         return this;
     }
@@ -28,7 +36,7 @@ public class RestClient {
     public void validate(ExpectedResponse expectedResponse) throws Exception {
         ResponseValidatorFactory
                 .get(apiRequest.getHttpMethod())
-                .validate(apiResponseResponseEntity,expectedResponse);
+                .validate(apiResponseResponseEntity, expectedResponse);
 
     }
 

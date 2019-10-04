@@ -27,13 +27,13 @@ public class TestCaseRunner {
             apiDetails.getTestCases().forEach(testCaseConfig -> {
                 Optional.ofNullable(testCaseConfig.getSampleRequest())
                         .ifPresent(sampleRequest -> {
-                            apiRequest.setBody(sampleRequest.getBody());
+                            sampleRequest.getBody().ifPresent(apiRequest::setBody);
                             apiRequest.setResponseListData(sampleRequest.isList());
                         });
                 try {
                     restClient.call(apiRequest).validate(testCaseConfig.getExpectedResponse());
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     testResults.add(new TestResult(apiDetails.getName(), "FAILED"));
                 }
 
@@ -41,7 +41,7 @@ public class TestCaseRunner {
         });
         Optional<TestResult> anyFailedTest = testResults.stream().filter(testResult -> "FAILED".equalsIgnoreCase(testResult.getStatus())).findAny();
         if (anyFailedTest.isPresent()) {
-            System.out.println("FAILED TEST CASE : " + anyFailedTest.get().getName());
+//            System.out.println("FAILED TEST CASE : " + anyFailedTest.get().getName());
             throw new Exception("INTEGRATION TEST FAILED !");
         }
     }
