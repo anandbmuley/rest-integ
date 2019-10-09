@@ -4,10 +4,12 @@ public class TestResult {
 
     private String name;
     private String status;
+    private String message;
 
-    public TestResult(String name, String status) {
+    public TestResult(String name, String status, String message) {
         this.name = name;
         this.status = status;
+        this.message = message;
     }
 
     public String getName() {
@@ -16,5 +18,9 @@ public class TestResult {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

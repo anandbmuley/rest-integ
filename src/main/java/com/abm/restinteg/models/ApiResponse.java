@@ -1,18 +1,18 @@
 package com.abm.restinteg.models;
 
 import com.abm.restinteg.models.config.ExpectedResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.skyscreamer.jsonassert.JSONAssert;
 
-public abstract class ApiResponse {
+public class ApiResponse {
 
-    protected ObjectMapper mapper;
+    private String data;
 
-    protected ApiResponse() {
-        mapper = new ObjectMapper();
+    public ApiResponse(String data) {
+        this.data = data;
     }
 
-    public abstract int size();
-
-    public abstract void validate(ExpectedResponse expectedResponse) throws Exception;
+    public void validate(ExpectedResponse expectedResponse) throws Exception {
+        JSONAssert.assertEquals(expectedResponse.getBody(), data, true);
+    }
 
 }

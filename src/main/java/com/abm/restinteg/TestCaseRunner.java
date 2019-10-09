@@ -8,6 +8,7 @@ import com.abm.restinteg.models.config.RestIntegration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TestCaseRunner {
 
@@ -32,16 +33,19 @@ public class TestCaseRunner {
                         });
                 try {
                     restClient.call(apiRequest).validate(testCaseConfig.getExpectedResponse());
-                } catch (Exception e) {
-//                    e.printStackTrace();
-                    testResults.add(new TestResult(apiDetails.getName(), "FAILED"));
+                } catch (Throwable e) {
+                    testResults.add(new TestResult(apiDetails.getName(), "FAILED", e.getMessage()));
                 }
 
             });
         });
-        Optional<TestResult> anyFailedTest = testResults.stream().filter(testResult -> "FAILED".equalsIgnoreCase(testResult.getStatus())).findAny();
-        if (anyFailedTest.isPresent()) {
-//            System.out.println("FAILED TEST CASE : " + anyFailedTest.get().getName());
+        List<TestResult> anyFailedTest = testResults.stream().filter(testResult -> "FAILED".equalsIgnoreCase(testResult.getStatus())).collect(Collectors.toList());
+        if (null != anyFailedTest && anyFailedTest.size() > 0) {
+            System.out.println("FAILED TEST CASES ARE :");
+            anyFailedTest.forEach(testResult -> {
+                System.err.println("NAME : " + testResult.getName());
+                System.err.println(testResult.getMessage());
+            });
             throw new Exception("INTEGRATION TEST FAILED !");
         }
     }
