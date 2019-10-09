@@ -4,20 +4,22 @@ import com.abm.restinteg.client.RestClient;
 import com.abm.restinteg.models.ApiRequest;
 import com.abm.restinteg.models.TestResult;
 import com.abm.restinteg.models.config.RestIntegration;
+import com.abm.restinteg.reporting.Report;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TestCaseRunner {
 
     private final RestClient restClient;
     private List<TestResult> testResults;
+    private Report report;
 
     public TestCaseRunner(RestClient restClient) {
         this.restClient = restClient;
         testResults = new ArrayList<>();
+        report = new Report();
     }
 
     public void invokeTests(RestIntegration restIntegration) throws Exception {
@@ -39,15 +41,8 @@ public class TestCaseRunner {
 
             });
         });
-        List<TestResult> anyFailedTest = testResults.stream().filter(testResult -> "FAILED".equalsIgnoreCase(testResult.getStatus())).collect(Collectors.toList());
-        if (null != anyFailedTest && anyFailedTest.size() > 0) {
-            System.out.println("FAILED TEST CASES ARE :");
-            anyFailedTest.forEach(testResult -> {
-                System.err.println("NAME : " + testResult.getName());
-                System.err.println(testResult.getMessage());
-            });
-            throw new Exception("INTEGRATION TEST FAILED !");
-        }
+
+        report.generate(testResults);
     }
 
 }
