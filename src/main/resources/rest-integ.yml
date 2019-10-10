@@ -2,6 +2,23 @@ ServiceName: REST Integrator
 Version: 1.2.3
 BasePath: http://localhost:8080/home-automation/api
 APIS:
+  - name: Find Bill By ID
+    path: /bills/{id}
+    method: GET
+    tests:
+      - name: Should return matching bill successfully
+        request:
+          pathParams:
+            id: 5cb0e8896115cb3447077259
+        response:
+          body: get-bill-by-id.json
+          status: 200
+      - name: Should return not found error
+        request:
+          pathParams:
+            id: abc
+        response:
+          status: 404
   - name: Get Bills
     path: /bills
     method: GET
@@ -21,7 +38,17 @@ APIS:
         response:
           body: bill-summary-response.json
           status: 200
-#
+
+  - name: Update API
+    path: /bills
+    method: PUT
+    tests:
+      - name: Should update bills successfully
+        request:
+          body: update-bill-request.json
+        response:
+          status: 204
+
 #  - name: Add Bill
 #    path: /bills
 #    method: POST

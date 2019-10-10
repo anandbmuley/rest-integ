@@ -35,7 +35,9 @@ public class RestClient {
 
     public void validate(ExpectedResponse expectedResponse) throws Exception {
         responseValidator.validate(apiResponseResponseEntity, expectedResponse);
-
     }
 
+    public ResponseEntity<ApiResponse> getApiResponseResponseEntity() {
+        return apiResponseResponseEntity;
+    }
 }

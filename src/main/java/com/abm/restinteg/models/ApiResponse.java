@@ -1,6 +1,5 @@
 package com.abm.restinteg.models;
 
-import com.abm.restinteg.models.config.ExpectedResponse;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class ApiResponse {
@@ -11,8 +10,11 @@ public class ApiResponse {
         this.data = data;
     }
 
-    public void validate(ExpectedResponse expectedResponse) throws Exception {
-        JSONAssert.assertEquals(expectedResponse.getBody(), data, true);
+    public void validate(String responseBody) {
+        JSONAssert.assertEquals(responseBody, data, true);
     }
 
+    public String getData() {
+        return data;
+    }
 }

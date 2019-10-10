@@ -31,6 +31,7 @@ public class RestIntegrator {
         try {
             invokeTests();
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println(e.getMessage());
         }
     }

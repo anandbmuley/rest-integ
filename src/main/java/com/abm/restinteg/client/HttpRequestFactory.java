@@ -13,6 +13,8 @@ public abstract class HttpRequestFactory {
             case POST:
                 httpRequest = new PostRequest(apiRequest.getCompleteUrl());
                 break;
+            case PUT:
+                httpRequest = new PutRequest(apiRequest.getCompleteUrl());
         }
         return httpRequest;
     }

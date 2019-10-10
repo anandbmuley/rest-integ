@@ -3,6 +3,8 @@ package com.abm.restinteg.models.config;
 import com.abm.restinteg.fileio.FileLoader;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Optional;
+
 public class ExpectedResponse {
 
     @JsonProperty("body")
@@ -17,8 +19,9 @@ public class ExpectedResponse {
         fileLoader = new FileLoader();
     }
 
-    public String getBody() {
-        return fileLoader.loadFile(responseFileLocation, FileLoader.FileType.RESPONSE);
+    public Optional<String> getBody() {
+        return Optional.ofNullable(responseFileLocation)
+                .map(loc -> fileLoader.loadFile(loc, FileLoader.FileType.RESPONSE));
     }
 
     public int getStatusCode() {

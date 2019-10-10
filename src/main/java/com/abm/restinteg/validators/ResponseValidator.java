@@ -10,7 +10,10 @@ public class ResponseValidator {
         if (expectedResponse.getStatusCode() != responseResponseEntity.getStatusCodeValue()) {
             throw new Exception("Status Code Mismatch : [ Expected : " + expectedResponse.getStatusCode() + ", Actual : " + responseResponseEntity.getStatusCodeValue() + " ]");
         }
-        responseResponseEntity.getBody().validate(expectedResponse);
+        expectedResponse.getBody()
+                .ifPresent(expectedResponseBody ->
+                        responseResponseEntity.getBody().validate(expectedResponseBody)
+                );
     }
 
 }

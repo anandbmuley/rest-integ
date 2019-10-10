@@ -26,8 +26,10 @@ dependencies {
 
     // JSON DIFF
     implementation 'org.json:json:20190722'
-    implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'org.skyscreamer:jsonassert:1.5.0'
+
+    // REPORTING
+    implementation 'org.apache.velocity:velocity-engine-core:2.1'
 
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.

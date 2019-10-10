@@ -1,5 +1,7 @@
 package com.abm.restinteg.models;
 
+import java.util.Map;
+
 public class ApiRequest {
 
     private String url;
@@ -7,6 +9,7 @@ public class ApiRequest {
     private String body;
     private HttpMethod httpMethod;
     private boolean responseListData;
+    private Map<String,String> pathVariables;
 
     public ApiRequest(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -20,6 +23,10 @@ public class ApiRequest {
         this.httpMethod = httpMethod;
         body = null;
         responseListData = false;
+    }
+
+    public void setPathVariables(Map<String, String> pathVariables) {
+        this.pathVariables = pathVariables;
     }
 
     public HttpMethod getHttpMethod() {
@@ -36,6 +43,10 @@ public class ApiRequest {
 
     public boolean isResponseListData() {
         return responseListData;
+    }
+
+    public Map<String, String> getPathVariables() {
+        return pathVariables;
     }
 
     public String getCompleteUrl() {

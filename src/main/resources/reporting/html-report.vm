@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Report</title>
+  <style>
+    .PASSED {
+        background-color: #24ab36;
+        color: black;
+    }
+    .FAILED {
+        background-color: #eb4242;
+        color: black;
+    }
+  </style>
+</head>
+<body>
+    <div align="center">
+        <h2>Report</h2>
+        <span><span style="font-weight:bold">Generated On :</span> $generatedOn</span>
+        <table border="1">
+            <thead>
+                <tr style="background-color:#2ea3a0">
+                    <th>API Name</th>
+                    ##<th>Sr.No</th>
+                    <th>Test Case Name</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            #foreach( $key in $resultMap.keySet())
+                #foreach( $result in $resultMap.get($key) )
+                <tr>
+                    #if ($foreach.count == 1 )
+                        <td>$key</td>
+                    #else
+                        <td></td>
+                    #end
+                    ##<td>$foreach.count</td>
+                    <td>$result.name</td>
+                    <td class="$result.status">$result.status</td>
+                    <td>$result.message</td>
+                </tr>
+                #end
+            #end
+        </table>
+    </div>
+</body>
+</html>
