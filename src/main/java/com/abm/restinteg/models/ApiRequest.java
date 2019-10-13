@@ -9,7 +9,7 @@ public class ApiRequest {
     private String body;
     private HttpMethod httpMethod;
     private boolean responseListData;
-    private Map<String,String> pathVariables;
+    private Map<String, Object> pathVariables;
 
     public ApiRequest(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -25,7 +25,7 @@ public class ApiRequest {
         responseListData = false;
     }
 
-    public void setPathVariables(Map<String, String> pathVariables) {
+    public void setPathVariables(Map<String, Object> pathVariables) {
         this.pathVariables = pathVariables;
     }
 
@@ -45,7 +45,7 @@ public class ApiRequest {
         return responseListData;
     }
 
-    public Map<String, String> getPathVariables() {
+    public Map<String, Object> getPathVariables() {
         return pathVariables;
     }
 

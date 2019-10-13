@@ -3,5 +3,5 @@
   "name": "Vodafone",
   "imageName": null,
   "frequency": "MONTHLY",
-  "status": "PAID"
+  "status": "UNPAID"
 }

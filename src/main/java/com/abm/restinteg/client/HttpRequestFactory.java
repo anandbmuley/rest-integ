@@ -15,6 +15,10 @@ public abstract class HttpRequestFactory {
                 break;
             case PUT:
                 httpRequest = new PutRequest(apiRequest.getCompleteUrl());
+                break;
+            case DELETE:
+                httpRequest = new DeleteRequest(apiRequest.getCompleteUrl());
+                break;
         }
         return httpRequest;
     }

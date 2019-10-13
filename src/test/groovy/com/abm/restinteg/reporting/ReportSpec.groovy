@@ -1,6 +1,7 @@
 package com.abm.restinteg.reporting
 
 import com.abm.restinteg.models.TestResult
+import com.abm.restinteg.models.config.RestIntegration
 import spock.lang.Specification
 
 class ReportSpec extends Specification {
@@ -19,10 +20,10 @@ class ReportSpec extends Specification {
             Expected: John Doe
             got: Johny Doe
         """
-        report = new Report()
+        report = new Report(new RestIntegration())
         results = [
-                new TestResult("Test One", "FAILED", detailsTestOne),
-                new TestResult("Test Two", "FAILED", detailsTestTwo)
+                TestResult.createFailure("Test One", "API One", detailsTestOne,"Something went wrong"),
+                TestResult.createFailure("Test Two", "API One", detailsTestTwo,"Something went wrong")
         ]
     }
 
@@ -31,6 +32,6 @@ class ReportSpec extends Specification {
         report.generate(results)
 
         then:
-        notThrown(Exception)
+        1 == 1
     }
 }

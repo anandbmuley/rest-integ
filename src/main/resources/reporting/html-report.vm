@@ -18,7 +18,17 @@
 <body>
     <div align="center">
         <h2>Report</h2>
-        <span><span style="font-weight:bold">Generated On :</span> $generatedOn</span>
+        <table>
+            <tr>
+                <td>
+                    <span><span style="font-weight:bold">Generated On :</span> $generatedOn</span>
+                </td>
+                <td>
+                    <span><span style="font-weight:bold">Version :</span> $version</span>
+                </td>
+            </tr>
+        </table>
+
         <table border="1">
             <thead>
                 <tr style="background-color:#2ea3a0">
@@ -26,6 +36,7 @@
                     ##<th>Sr.No</th>
                     <th>Test Case Name</th>
                     <th>Status</th>
+                    <th>Expected JSON</th>
                     <th>Details</th>
                 </tr>
             </thead>
@@ -40,6 +51,7 @@
                     ##<td>$foreach.count</td>
                     <td>$result.name</td>
                     <td class="$result.status">$result.status</td>
+                    <td>$!result.expected</td>
                     <td>$result.message</td>
                 </tr>
                 #end

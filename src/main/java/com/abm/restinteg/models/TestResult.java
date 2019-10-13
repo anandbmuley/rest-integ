@@ -7,27 +7,25 @@ public class TestResult {
     private Status status;
     private String message;
     private String expected;
-    private String actual;
 
     public enum Status {
         PASSED, FAILED
     }
 
-    private TestResult(String apiName, String name, Status status, String message, String expected, String actual) {
+    private TestResult(String apiName, String name, Status status, String message, String expected) {
         this.apiName = apiName;
         this.name = name;
         this.status = status;
         this.message = message;
         this.expected = expected;
-        this.actual = actual;
     }
 
-    public static TestResult createSuccess(String apiName, String name, String expected, String actual) {
-        return new TestResult(apiName, name, Status.PASSED, "Test Passed Successfully !", expected, actual);
+    public static TestResult createSuccess(String apiName, String name, String expected) {
+        return new TestResult(apiName, name, Status.PASSED, "Test Passed Successfully !", expected);
     }
 
-    public static TestResult createFailure(String apiName, String name, String details, String expected, String actual) {
-        return new TestResult(apiName, name, Status.FAILED, details, expected, actual);
+    public static TestResult createFailure(String apiName, String name, String details, String expected) {
+        return new TestResult(apiName, name, Status.FAILED, details, expected);
     }
 
     public String getName() {
@@ -44,10 +42,6 @@ public class TestResult {
 
     public String getApiName() {
         return apiName;
-    }
-
-    public String getActual() {
-        return actual;
     }
 
     public String getExpected() {

@@ -24,6 +24,10 @@ public class ExpectedResponse {
                 .map(loc -> fileLoader.loadFile(loc, FileLoader.FileType.RESPONSE));
     }
 
+    public Optional<String> getFileLocation() {
+        return Optional.ofNullable(responseFileLocation);
+    }
+
     public int getStatusCode() {
         return statusCode;
     }

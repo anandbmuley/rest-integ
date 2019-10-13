@@ -12,7 +12,7 @@ public class SampleRequest {
     private String requestFileLocation;
 
     @JsonProperty("pathParams")
-    private Map<String, String> pathParams;
+    private Map<String, Object> pathParams;
 
     @JsonProperty("responseIsList")
     private boolean list;
@@ -29,7 +29,7 @@ public class SampleRequest {
                 .map($ -> fileLoader.loadFile(requestFileLocation, FileLoader.FileType.REQUEST));
     }
 
-    public Map<String, String> getPathParams() {
+    public Map<String, Object> getPathParams() {
         return pathParams;
     }
 

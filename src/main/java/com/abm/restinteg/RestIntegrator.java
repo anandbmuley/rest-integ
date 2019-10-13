@@ -2,6 +2,7 @@ package com.abm.restinteg;
 
 import com.abm.restinteg.client.RestClient;
 import com.abm.restinteg.models.config.RestIntegration;
+import com.abm.restinteg.reporting.Report;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.springframework.util.StringUtils;
@@ -37,7 +38,7 @@ public class RestIntegrator {
     }
 
     private void invokeTests() throws Exception {
-        testCaseRunner.invokeTests(restIntegration);
+        testCaseRunner.invokeTests();
     }
 
     public RestIntegrator(String configFileName) throws Exception {
@@ -50,12 +51,12 @@ public class RestIntegrator {
     private void configureBeans() {
         RestTemplate restTemplate = new RestTemplate();
         RestClient restClient = new RestClient(restTemplate);
-        testCaseRunner = new TestCaseRunner(restClient);
+        testCaseRunner = new TestCaseRunner(restClient, restIntegration, new Report(restIntegration));
     }
 
     private void loadConfig() {
         try {
-            restIntegration = mapper.readValue(new File("src/main/resources/" + configFileName), RestIntegration.class);
+            restIntegration = mapper.readValue(new File("src/test/resources/" + configFileName), RestIntegration.class);
         } catch (FileNotFoundException fnf) {
             System.err.println("Config file not found : " + configFileName);
         } catch (IOException e) {

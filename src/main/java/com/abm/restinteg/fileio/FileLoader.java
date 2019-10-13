@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class FileLoader {
 
-    private final String BASE_LOCATION = "src/main/resources/";
+    private final String BASE_LOCATION = "src/test/resources/";
 
     public enum FileType {
         REQUEST("requests/"), RESPONSE("responses/");

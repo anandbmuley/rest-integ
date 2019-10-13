@@ -12,6 +12,20 @@ plugins {
 
     // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
+
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'abm'
+            artifactId = 'rest-integ'
+            version = '0.0.1-SNAPSHOT'
+
+            from components.java
+        }
+    }
 }
 
 repositories {
@@ -43,5 +57,5 @@ dependencies {
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'cglib:cglib-nodep:3.3.0'
 }
