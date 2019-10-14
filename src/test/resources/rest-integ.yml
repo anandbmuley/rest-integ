@@ -62,13 +62,12 @@ APIS:
         response:
           status: 200
 
-
-#  - name: Add Bill
-#    path: /bills
-#    method: POST
-#    tests:
-#      - name: Should add all bills successfully
-#        request:
-#          body: add-bill-request.json
-#        response:
-#          status: 200
+  - name: Add Bill
+    path: /bills
+    method: POST
+    tests:
+      - name: Should add all bills successfully
+        request:
+          body: add-bill-request.json
+        response:
+          status: 200

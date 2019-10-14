@@ -22,7 +22,6 @@ public class Report {
     private static final String RESOURCE_LOCATION = "reporting/";
     public static final String HTML_REPORT = "html-report.vm";
     private VelocityEngine velocityEngine;
-    private String EXPORT_LOCATION = "/home/anandmuley/Desktop/htmlreport.html";
     private RestIntegration restIntegration;
     private VelocityContext velocityContext;
 
@@ -43,7 +42,6 @@ public class Report {
 
     public String loadTemplate(String name, List<TestResult> results) {
         Template template = velocityEngine.getTemplate(name);
-        VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("results", results);
         velocityContext.put("resultMap", results.stream().collect(Collectors.groupingBy(TestResult::getApiName)));
         StringWriter writer = new StringWriter();
@@ -54,7 +52,7 @@ public class Report {
     public void generate(List<TestResult> results) {
         String report = loadTemplate(RESOURCE_LOCATION + HTML_REPORT, results);
         try {
-            Files.write(Paths.get(EXPORT_LOCATION), report.getBytes());
+            Files.write(Paths.get(System.getProperty("user.home"), "Desktop","rest-integ-report.html"), report.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
