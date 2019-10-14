@@ -52,7 +52,7 @@ public class Report {
     public void generate(List<TestResult> results) {
         String report = loadTemplate(RESOURCE_LOCATION + HTML_REPORT, results);
         try {
-            Files.write(Paths.get(System.getProperty("user.home"), "Desktop","rest-integ-report.html"), report.getBytes());
+            Files.write(Paths.get(System.getProperty("user.home"), "Desktop", "rest-integ-report.html"), report.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
