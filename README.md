@@ -14,27 +14,27 @@ of HOW to do it.
 ### Components
 The rest-integ consists of below components :
 
-* rest-integ.yml : Its the main configuration file which explains what needs to be done. It consists of APIs declaration
+* <b>rest-integ.yml :</b> Its the main configuration file which explains what needs to be done. It consists of APIs declaration
 and Base Path definition. Different test cases and there expected outcomes. The file should be placed in the
 src/test/resources folder. Check below sample rest-integ.yml.
 
-* request.json : A request json file contains the JSON format request body if we need to pass on to an API. Its optional
+* <b>request.json :</b> A request json file contains the JSON format request body if we need to pass on to an API. Its optional
 since not all APIs need a Request Body. All the request.json files should be placed in the src/test/resources/requests
 package. Ideally you need to create a <b>requests</b> folder in src/test/resource folder.
 
-* response.json : Most of the APIs have a response body. We need to perform assertions with the actual response received
+* <b>response.json :</b> Most of the APIs have a response body. We need to perform assertions with the actual response received
 and expected response. Hence we should create a response.json body for the test case when you have some response body 
 received from an API and would like to assert the same. Its also optional since not all APIs have a response body.
 
-* RestIntegrator.java : Its the main entry point. The Java class invokes all the test cases defined in the rest-integ.yml.
+* <b>RestIntegrator.java :</b> Its the main entry point. The Java class invokes all the test cases defined in the rest-integ.yml.
 Currently rest-integ is in nascent stage hence you will have to create an instance of this class in an empty test case so
 that it invokes the test cases. Easy integration of this into well known testing frameworks is in progress.
 
-* HTML Reports : Currently as basic HTML reporting is supported in rest-integ. The report shows what all APIs were invoked
+* <b>HTML Reports :</b> Currently as basic HTML reporting is supported in rest-integ. The report shows what all APIs were invoked
 and test cases run with their output.
 
 ### rest-integ.yml
-Same rest-integ.yml is shown below. Its self explanatory for those who already know YAML config.
+Sample rest-integ.yml is shown below. Its self explanatory for those who already know YAML config.
 
 ```
 ServiceName: REST Integrator
@@ -111,6 +111,34 @@ APIS:
         response:
           status: 200
 ```
+In above sample configuration please note below points :
+
+* <b>get-bill-by-id.json : </b> It is an expected JSON body response for the <b>Find Bill By ID</b> API. The above configuration 
+will search this JSON file in the location <b>src/test/resources/responses</b> folder. Hence you need to create a JSON file
+with the expected JSON content and place it in that folder. Below is the content of this sample file
+```
+{
+  "id": "5cb0e8896115cb3447077259",
+  "name": "Vodafone",
+  "imageName": null,
+  "frequency": "MONTHLY",
+  "status": "UNPAID"
+}
+```
+
+* <b>add-bill-request.json : </b> The add bill API will accept a JSON request of Bill to be saved. The configuration above
+ expects that a JSON file should be present in the <b>src/test/resources/requests</b> folder. When the test case is run this
+ file is picked up and POSTed to the Add Bill API as part of the test invocation. JSON content of this sample file is 
+ shown below:
+ 
+ ```
+{
+  "name": "Vodafone",
+  "frequency": "MONTHLY"
+}
+```
+
+* <b>pathParams : </b>Path Params configuration option is provided for request URLs which contain path params
 
 ### Sample HTML Report
 A screenshot of sample HTML Report which is very basic is attached below :
