@@ -6,6 +6,9 @@ public class ApiResponse {
 
     private String data;
 
+    public ApiResponse() {
+    }
+
     public ApiResponse(String data) {
         this.data = data;
     }

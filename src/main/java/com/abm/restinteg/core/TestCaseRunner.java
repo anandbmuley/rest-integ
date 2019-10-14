@@ -1,4 +1,4 @@
-package com.abm.restinteg;
+package com.abm.restinteg.core;
 
 import com.abm.restinteg.client.RestClient;
 import com.abm.restinteg.models.ApiRequest;

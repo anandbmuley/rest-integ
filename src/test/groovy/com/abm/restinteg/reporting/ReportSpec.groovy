@@ -1,7 +1,6 @@
 package com.abm.restinteg.reporting
 
 import com.abm.restinteg.models.TestResult
-import com.abm.restinteg.models.config.RestIntegration
 import spock.lang.Specification
 
 class ReportSpec extends Specification {
@@ -9,7 +8,16 @@ class ReportSpec extends Specification {
     Report report
     List<TestResult> results
 
+    TemplateLoader mockTemplateLoader
+
     void setup() {
+        0 * _
+        mockTemplateLoader = Mock(TemplateLoader)
+        report = new Report(mockTemplateLoader)
+        setUpTestData()
+    }
+
+    private void setUpTestData() {
         String detailsTestOne = """
         frequency
             Expected: MONTHLYs
@@ -20,18 +28,21 @@ class ReportSpec extends Specification {
             Expected: John Doe
             got: Johny Doe
         """
-        report = new Report(new RestIntegration())
         results = [
-                TestResult.createFailure("Test One", "API One", detailsTestOne,"Something went wrong"),
-                TestResult.createFailure("Test Two", "API One", detailsTestTwo,"Something went wrong")
+                TestResult.createFailure("Test One", "API One", detailsTestOne, "Something went wrong"),
+                TestResult.createFailure("Test Two", "API One", detailsTestTwo, "Something went wrong")
         ]
     }
 
     def "generate - should generate report"() {
+        given:
+        def reportContent = "Hello World !"
+        1 * mockTemplateLoader.load("reporting/html-report.vm", results) >> reportContent
+
         when:
         report.generate(results)
 
         then:
-        1 == 1
+        noExceptionThrown()
     }
 }
