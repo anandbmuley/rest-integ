@@ -9,6 +9,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,7 +19,7 @@ public class RestIntegBeansConfig {
 
     private final RestIntegration restIntegration;
 
-    public RestIntegBeansConfig(ConfigFileLoader configFileLoader) {
+    public RestIntegBeansConfig(ConfigFileLoader configFileLoader) throws IOException {
         this.restIntegration = configFileLoader.load();
     }
 

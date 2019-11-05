@@ -2,6 +2,8 @@ package com.abm.restinteg.core
 
 import com.abm.restinteg.models.config.RestIntegration
 import org.apache.velocity.VelocityContext
+import org.apache.velocity.app.VelocityEngine
+import org.apache.velocity.runtime.RuntimeConstants
 import spock.lang.Specification
 
 class RestIntegBeansConfigSpec extends Specification {
@@ -37,6 +39,9 @@ class RestIntegBeansConfigSpec extends Specification {
         context.get("generatedOn") != null
         context.get("version") == "1.2.3"
 
-        testCaseRunner.report.templateLoader.velocityEngine != null
+        VelocityEngine velocityEngine = testCaseRunner.report.templateLoader.velocityEngine
+        velocityEngine != null
+        velocityEngine.getProperty(RuntimeConstants.RESOURCE_LOADER).toString() == "[classpath]"
+        velocityEngine.getProperty("classpath.resource.loader.class") == "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"
     }
 }

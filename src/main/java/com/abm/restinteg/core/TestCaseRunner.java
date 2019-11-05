@@ -43,7 +43,6 @@ public class TestCaseRunner {
                     restClient.call(apiRequest).validate(expectedResponse);
                     testResults.add(TestResult.createSuccess(apiDetails.getName(), testCaseConfig.getName(), expected));
                 } catch (Throwable e) {
-//                    e.printStackTrace();
                     testResults.add(TestResult.createFailure(apiDetails.getName(), testCaseConfig.getName(), e.getMessage(), expected));
                 }
 

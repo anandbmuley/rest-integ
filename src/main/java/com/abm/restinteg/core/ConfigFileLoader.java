@@ -19,14 +19,12 @@ public class ConfigFileLoader {
         mapper = new ObjectMapper(new YAMLFactory());
     }
 
-    public RestIntegration load() {
-        RestIntegration restIntegration = null;
+    public RestIntegration load() throws IOException {
+        RestIntegration restIntegration;
         try {
             restIntegration = mapper.readValue(new File("src/test/resources/" + configFileName), RestIntegration.class);
         } catch (FileNotFoundException fnf) {
-            System.err.println("Config file not found : " + configFileName);
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException("Config file not found : " + configFileName);
         }
         return restIntegration;
     }

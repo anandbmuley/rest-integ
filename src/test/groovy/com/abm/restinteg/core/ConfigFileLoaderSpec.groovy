@@ -19,4 +19,16 @@ class ConfigFileLoaderSpec extends Specification {
         restIntegration.serviceName == "REST Integrator"
         restIntegration.basePath == "http://localhost:8080/home-automation/api"
     }
+
+    def "load - should log an error if config file is not found"() {
+        given:
+        configFileLoader.configFileName = ""
+
+        when:
+        configFileLoader.load()
+
+        then:
+        def ex = thrown(FileNotFoundException)
+        ex.message == "Config file not found : "
+    }
 }
