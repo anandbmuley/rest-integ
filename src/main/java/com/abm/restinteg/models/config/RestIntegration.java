@@ -15,6 +15,9 @@ public class RestIntegration {
     @JsonProperty("BasePath")
     private String basePath;
 
+    @JsonProperty("ApiVersion")
+    private String apiVersion;
+
     @JsonProperty("APIS")
     private List<ApiDetails> apiDetails;
 

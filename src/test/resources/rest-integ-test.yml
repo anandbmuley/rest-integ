@@ -1,7 +1,6 @@
 ServiceName: REST Integrator
 Version: 1.2.3
 BasePath: http://localhost:8080/home-automation/api
-ApiVersion: v3
 
 APIS:
   - name: Find Bill By ID
