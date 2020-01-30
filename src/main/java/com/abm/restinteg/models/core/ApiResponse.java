@@ -1,4 +1,4 @@
-package com.abm.restinteg.models;
+package com.abm.restinteg.models.core;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 

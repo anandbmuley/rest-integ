@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class RestIntegration {
+public class RestIntegrationConfig {
 
     @JsonProperty("ServiceName")
     private String serviceName;
@@ -19,7 +19,7 @@ public class RestIntegration {
     private String apiVersion;
 
     @JsonProperty("APIS")
-    private List<ApiDetails> apiDetails;
+    private List<ApiTestCaseConfig> apiTestCaseConfigs;
 
     public String getServiceName() {
         return serviceName;
@@ -33,7 +33,7 @@ public class RestIntegration {
         return basePath;
     }
 
-    public List<ApiDetails> getApiDetails() {
-        return apiDetails;
+    public List<ApiTestCaseConfig> getApiTestCaseConfigs() {
+        return apiTestCaseConfigs;
     }
 }

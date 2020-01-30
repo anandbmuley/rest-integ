@@ -1,6 +1,6 @@
 package com.abm.restinteg.core;
 
-import com.abm.restinteg.models.config.RestIntegration;
+import com.abm.restinteg.models.config.RestIntegrationConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
@@ -19,14 +19,19 @@ public class ConfigFileLoader {
         mapper = new ObjectMapper(new YAMLFactory());
     }
 
-    public RestIntegration load() throws IOException {
-        RestIntegration restIntegration;
+    public ConfigFileLoader(String configFileName) {
+        this();
+        this.configFileName = configFileName;
+    }
+
+    public RestIntegrationConfig load() throws IOException {
+        RestIntegrationConfig restIntegrationConfig;
         try {
-            restIntegration = mapper.readValue(new File("src/test/resources/" + configFileName), RestIntegration.class);
+            restIntegrationConfig = mapper.readValue(new File("src/test/resources/" + configFileName), RestIntegrationConfig.class);
         } catch (FileNotFoundException fnf) {
             throw new FileNotFoundException("Config file not found : " + configFileName);
         }
-        return restIntegration;
+        return restIntegrationConfig;
     }
 
 }

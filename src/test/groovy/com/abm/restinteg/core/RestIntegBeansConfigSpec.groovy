@@ -1,6 +1,8 @@
 package com.abm.restinteg.core
 
-import com.abm.restinteg.models.config.RestIntegration
+import com.abm.restinteg.models.config.ApiTestCaseConfig
+import com.abm.restinteg.models.config.RestIntegrationConfig
+import com.abm.restinteg.models.config.TestScenarioConfig
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
@@ -11,14 +13,18 @@ class RestIntegBeansConfigSpec extends Specification {
     RestIntegBeansConfig beansConfig
 
     ConfigFileLoader mockConfigFileLoader
-    RestIntegration mockRestIntegration
+    RestIntegrationConfig mockRestIntegration
 
     void setup() {
         0 * _
 
-        mockRestIntegration = Mock(RestIntegration)
+        mockRestIntegration = Mock(RestIntegrationConfig)
         mockConfigFileLoader = Mock(ConfigFileLoader)
+        ApiTestCaseConfig apiTestCaseConfig = new ApiTestCaseConfig()
+        apiTestCaseConfig.testScenarioConfigs = [new TestScenarioConfig()]
 
+        1 * mockRestIntegration.getApiTestCaseConfigs() >> [apiTestCaseConfig]
+        1 * mockRestIntegration.getBasePath() >> "http://localhost:8080"
         1 * mockConfigFileLoader.load() >> mockRestIntegration
         1 * mockRestIntegration.getVersion() >> "1.2.3"
 
@@ -31,7 +37,7 @@ class RestIntegBeansConfigSpec extends Specification {
 
         then:
         testCaseRunner.restClient != null
-        testCaseRunner.restIntegration != null
+        testCaseRunner.restIntegrationConfig != null
         testCaseRunner.report != null
         testCaseRunner.report.templateLoader != null
         VelocityContext context = testCaseRunner.report.templateLoader.velocityContext

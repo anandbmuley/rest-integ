@@ -1,11 +1,12 @@
 package com.abm.restinteg.client;
 
-import com.abm.restinteg.models.ApiRequest;
-import com.abm.restinteg.models.ApiResponse;
-import com.abm.restinteg.models.config.ExpectedResponse;
+import com.abm.restinteg.models.core.ExpectedResponse;
+import com.abm.restinteg.models.core.TestScenario;
+import com.abm.restinteg.models.core.ApiResponse;
+import com.abm.restinteg.models.config.ExpectedResponseConfig;
 import com.abm.restinteg.validators.ResponseValidator;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import static com.abm.restinteg.client.HttpRequestFactory.get;
@@ -14,7 +15,7 @@ public class RestClient {
 
     protected RestTemplate restTemplate;
     private ResponseEntity<ApiResponse> apiResponseResponseEntity;
-    private ApiRequest apiRequest;
+    private TestScenario testScenario;
     private ResponseValidator responseValidator;
 
     public RestClient(RestTemplate restTemplate) {
@@ -22,14 +23,17 @@ public class RestClient {
         responseValidator = new ResponseValidator();
     }
 
-    public RestClient call(ApiRequest apiRequest) {
+    public RestClient call(TestScenario testScenario) {
         try {
-            apiResponseResponseEntity = get(apiRequest).call(apiRequest);
-        } catch (RestClientException e) {
-            System.err.println("UNABLE TO CONNECT TO SERVICE...");
+            apiResponseResponseEntity = get(testScenario).call(testScenario);
+        } catch (RestClientResponseException e) {
+            apiResponseResponseEntity = ResponseEntity.status(e.getRawStatusCode()).body(new ApiResponse(e.getResponseBodyAsString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("UNABLE TO CONNECT TO SERVICE..." + e.getMessage());
             throw e;
         }
-        this.apiRequest = apiRequest;
+        this.testScenario = testScenario;
         return this;
     }
 

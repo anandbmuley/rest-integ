@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Optional;
 
-public class ExpectedResponse {
+public class ExpectedResponseConfig {
 
     @JsonProperty("body")
     private String responseFileLocation;
@@ -15,7 +15,7 @@ public class ExpectedResponse {
 
     private FileLoader fileLoader;
 
-    public ExpectedResponse() {
+    public ExpectedResponseConfig() {
         fileLoader = new FileLoader();
     }
 

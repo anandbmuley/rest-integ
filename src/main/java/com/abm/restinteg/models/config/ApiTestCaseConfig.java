@@ -1,11 +1,11 @@
 package com.abm.restinteg.models.config;
 
-import com.abm.restinteg.models.HttpMethod;
+import com.abm.restinteg.models.core.HttpMethod;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ApiDetails {
+public class ApiTestCaseConfig {
 
     @JsonProperty("name")
     private String name;
@@ -17,7 +17,7 @@ public class ApiDetails {
     private HttpMethod httpMethod;
 
     @JsonProperty("tests")
-    private List<TestCase> testCases;
+    private List<TestScenarioConfig> testScenarioConfigs;
 
     public String getName() {
         return name;
@@ -31,7 +31,7 @@ public class ApiDetails {
         return httpMethod;
     }
 
-    public List<TestCase> getTestCases() {
-        return testCases;
+    public List<TestScenarioConfig> getTestScenarioConfigs() {
+        return testScenarioConfigs;
     }
 }

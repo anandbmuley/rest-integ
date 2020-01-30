@@ -1,6 +1,6 @@
 package com.abm.restinteg.core
 
-import com.abm.restinteg.models.config.RestIntegration
+import com.abm.restinteg.models.config.RestIntegrationConfig
 import spock.lang.Specification
 
 class ConfigFileLoaderSpec extends Specification {
@@ -13,11 +13,11 @@ class ConfigFileLoaderSpec extends Specification {
 
     def "load - should load the config file"() {
         when:
-        RestIntegration restIntegration = configFileLoader.load()
+        RestIntegrationConfig restIntegration = configFileLoader.load()
 
         then:
-        restIntegration.serviceName == "REST Integrator"
-        restIntegration.basePath == "http://localhost:8080/home-automation/api"
+        restIntegration.serviceName == "MEROBO Rest API Integration Testing"
+        restIntegration.basePath == "http://localhost:8080/merobo/api"
     }
 
     def "load - should log an error if config file is not found"() {

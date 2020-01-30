@@ -1,7 +1,7 @@
 package com.abm.restinteg.client;
 
-import com.abm.restinteg.models.ApiRequest;
-import com.abm.restinteg.models.ApiResponse;
+import com.abm.restinteg.models.core.TestScenario;
+import com.abm.restinteg.models.core.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
@@ -16,8 +16,8 @@ public class DeleteRequest extends HttpRequest {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) throws RestClientException {
-        Map<String, Object> uriVariables = Optional.ofNullable(apiRequest.getPathVariables()).orElseGet(Collections::emptyMap);
+    public ResponseEntity<ApiResponse> call(TestScenario testScenario) throws RestClientException {
+        Map<String, Object> uriVariables = Optional.ofNullable(testScenario.getPathVariables()).orElseGet(Collections::emptyMap);
         restTemplate.delete(url, uriVariables);
         return ResponseEntity.ok().build();
     }

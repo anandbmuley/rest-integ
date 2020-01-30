@@ -1,23 +1,23 @@
 package com.abm.restinteg.client;
 
-import com.abm.restinteg.models.ApiRequest;
+import com.abm.restinteg.models.core.TestScenario;
 
 public abstract class HttpRequestFactory {
 
-    public static HttpRequest get(ApiRequest apiRequest) {
+    public static HttpRequest get(TestScenario testScenario) {
         HttpRequest httpRequest = null;
-        switch (apiRequest.getHttpMethod()) {
+        switch (testScenario.getHttpMethod()) {
             case GET:
-                httpRequest = new GetRequest(apiRequest.getCompleteUrl());
+                httpRequest = new GetRequest(testScenario.getCompleteUrl());
                 break;
             case POST:
-                httpRequest = new PostRequest(apiRequest.getCompleteUrl());
+                httpRequest = new PostRequest(testScenario.getCompleteUrl());
                 break;
             case PUT:
-                httpRequest = new PutRequest(apiRequest.getCompleteUrl());
+                httpRequest = new PutRequest(testScenario.getCompleteUrl());
                 break;
             case DELETE:
-                httpRequest = new DeleteRequest(apiRequest.getCompleteUrl());
+                httpRequest = new DeleteRequest(testScenario.getCompleteUrl());
                 break;
         }
         return httpRequest;

@@ -1,7 +1,7 @@
 package com.abm.restinteg.client;
 
-import com.abm.restinteg.models.ApiRequest;
-import com.abm.restinteg.models.ApiResponse;
+import com.abm.restinteg.models.core.TestScenario;
+import com.abm.restinteg.models.core.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
@@ -17,9 +17,9 @@ public class GetRequest extends HttpRequest {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> call(ApiRequest apiRequest) throws RestClientException {
+    public ResponseEntity<ApiResponse> call(TestScenario testScenario) throws RestClientException {
         try {
-            Map<String, Object> uriVariables = Optional.ofNullable(apiRequest.getPathVariables()).orElseGet(Collections::emptyMap);
+            Map<String, Object> uriVariables = Optional.ofNullable(testScenario.getPathVariables()).orElseGet(Collections::emptyMap);
             ResponseEntity<String> entity = restTemplate.getForEntity(url, String.class, uriVariables);
             return ResponseEntity
                     .status(entity.getStatusCode())

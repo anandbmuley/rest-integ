@@ -1,6 +1,6 @@
 package com.abm.restinteg.reporting
 
-import com.abm.restinteg.models.TestResult
+import com.abm.restinteg.models.core.TestResult
 import spock.lang.Specification
 
 class ReportSpec extends Specification {

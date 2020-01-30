@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import java.util.Optional;
 
-public class SampleRequest {
+public class RequestConfig {
 
     @JsonProperty("body")
     private String requestFileLocation;
@@ -20,7 +20,7 @@ public class SampleRequest {
     private FileLoader fileLoader;
 
 
-    public SampleRequest() {
+    public RequestConfig() {
         fileLoader = new FileLoader();
     }
 

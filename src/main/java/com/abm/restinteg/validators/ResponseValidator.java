@@ -1,7 +1,7 @@
 package com.abm.restinteg.validators;
 
-import com.abm.restinteg.models.ApiResponse;
-import com.abm.restinteg.models.config.ExpectedResponse;
+import com.abm.restinteg.models.core.ApiResponse;
+import com.abm.restinteg.models.core.ExpectedResponse;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseValidator {

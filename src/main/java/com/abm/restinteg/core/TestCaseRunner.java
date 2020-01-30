@@ -1,55 +1,38 @@
 package com.abm.restinteg.core;
 
 import com.abm.restinteg.client.RestClient;
-import com.abm.restinteg.models.ApiRequest;
-import com.abm.restinteg.models.TestResult;
-import com.abm.restinteg.models.config.ExpectedResponse;
-import com.abm.restinteg.models.config.RestIntegration;
+import com.abm.restinteg.models.config.RestIntegrationConfig;
+import com.abm.restinteg.models.core.TestCase;
+import com.abm.restinteg.models.core.TestResult;
 import com.abm.restinteg.reporting.Report;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class TestCaseRunner {
 
     private final RestClient restClient;
     private List<TestResult> testResults;
+    private List<TestCase> testCases;
     private Report report;
-    private RestIntegration restIntegration;
+    private RestIntegrationConfig restIntegrationConfig;
+    private TestCaseBuilder testCaseBuilder;
 
-    public TestCaseRunner(RestClient restClient, RestIntegration restIntegration, Report report) {
+    public TestCaseRunner(RestClient restClient, RestIntegrationConfig restIntegrationConfig, Report report) {
         this.restClient = restClient;
         testResults = new ArrayList<>();
         this.report = report;
-        this.restIntegration = restIntegration;
+        this.restIntegrationConfig = restIntegrationConfig;
+        testCaseBuilder = new TestCaseBuilder(new TestScenarioBuilder(report, restClient));
+        prepareTestCases();
     }
 
-    public void invokeTests() throws Exception {
-        ApiRequest apiRequest = new ApiRequest(restIntegration.getBasePath());
-        restIntegration.getApiDetails().forEach(apiDetails -> {
-            apiRequest.setUrl(apiDetails.getPath());
-            apiRequest.setHttpMethod(apiDetails.getHttpMethod());
-            apiDetails.getTestCases().forEach(testCaseConfig -> {
-                Optional.ofNullable(testCaseConfig.getSampleRequest())
-                        .ifPresent(sampleRequest -> {
-                            sampleRequest.getBody().ifPresent(apiRequest::setBody);
-                            apiRequest.setResponseListData(sampleRequest.isList());
-                            apiRequest.setPathVariables(sampleRequest.getPathParams());
-                        });
-                ExpectedResponse expectedResponse = testCaseConfig.getExpectedResponse();
-                String expected = expectedResponse.getFileLocation().orElse(null);
-                try {
-                    restClient.call(apiRequest).validate(expectedResponse);
-                    testResults.add(TestResult.createSuccess(apiDetails.getName(), testCaseConfig.getName(), expected));
-                } catch (Throwable e) {
-                    testResults.add(TestResult.createFailure(apiDetails.getName(), testCaseConfig.getName(), e.getMessage(), expected));
-                }
+    public void prepareTestCases() {
+        testCases = testCaseBuilder.build(restIntegrationConfig.getBasePath(), restIntegrationConfig.getApiTestCaseConfigs());
+    }
 
-            });
-        });
-
-        report.generate(testResults);
+    public void invokeTests() {
+        testCases.forEach(TestCase::run);
     }
 
 }

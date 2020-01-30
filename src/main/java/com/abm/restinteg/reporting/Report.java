@@ -1,6 +1,6 @@
 package com.abm.restinteg.reporting;
 
-import com.abm.restinteg.models.TestResult;
+import com.abm.restinteg.models.core.TestResult;
 
 import java.io.IOException;
 import java.nio.file.Files;

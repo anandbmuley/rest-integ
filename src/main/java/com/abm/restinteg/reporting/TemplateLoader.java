@@ -1,6 +1,6 @@
 package com.abm.restinteg.reporting;
 
-import com.abm.restinteg.models.TestResult;
+import com.abm.restinteg.models.core.TestResult;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
