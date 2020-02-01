@@ -1,39 +1,40 @@
 package com.abm.restinteg.client;
 
+import com.abm.restinteg.models.core.ApiResponse;
 import com.abm.restinteg.models.core.ExpectedResponse;
 import com.abm.restinteg.models.core.TestScenario;
-import com.abm.restinteg.models.core.ApiResponse;
-import com.abm.restinteg.models.config.ExpectedResponseConfig;
 import com.abm.restinteg.validators.ResponseValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static com.abm.restinteg.client.HttpRequestFactory.get;
 
 public class RestClient {
 
+    private final Logger LOGGER = Logger.getLogger(RestClient.class.getSimpleName());
+
     protected RestTemplate restTemplate;
     private ResponseEntity<ApiResponse> apiResponseResponseEntity;
-    private TestScenario testScenario;
     private ResponseValidator responseValidator;
 
-    public RestClient(RestTemplate restTemplate) {
+    public RestClient(RestTemplate restTemplate, ResponseValidator responseValidator) {
         this.restTemplate = restTemplate;
-        responseValidator = new ResponseValidator();
+        this.responseValidator = responseValidator;
     }
 
     public RestClient call(TestScenario testScenario) {
         try {
-            apiResponseResponseEntity = get(testScenario).call(testScenario);
+            apiResponseResponseEntity = get(testScenario, restTemplate).call(testScenario);
         } catch (RestClientResponseException e) {
             apiResponseResponseEntity = ResponseEntity.status(e.getRawStatusCode()).body(new ApiResponse(e.getResponseBodyAsString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("UNABLE TO CONNECT TO SERVICE..." + e.getMessage());
+            LOGGER.log(Level.INFO, "UNABLE TO CONNECT TO SERVICE..." + e.getMessage());
             throw e;
         }
-        this.testScenario = testScenario;
         return this;
     }
 
@@ -41,7 +42,4 @@ public class RestClient {
         responseValidator.validate(apiResponseResponseEntity, expectedResponse);
     }
 
-    public ResponseEntity<ApiResponse> getApiResponseResponseEntity() {
-        return apiResponseResponseEntity;
-    }
 }

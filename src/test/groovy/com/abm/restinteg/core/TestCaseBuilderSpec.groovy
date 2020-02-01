@@ -33,7 +33,6 @@ class TestCaseBuilderSpec extends Specification {
         given:
         def basePath = restIntegrationConfig.basePath
         def apiTestCaseConfig = restIntegrationConfig.apiTestCaseConfigs[0]
-        def scenarioConfig = apiTestCaseConfig.testScenarioConfigs[0]
         def apiName = "Get Customer Details"
         def scenarioName = "Should fetch customer details successfully"
         Report mockReport = Mock()
@@ -52,5 +51,6 @@ class TestCaseBuilderSpec extends Specification {
         testCases[0].method == POST
 
         testCases[0].scenarios.size() == 2
+
     }
 }

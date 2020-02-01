@@ -36,16 +36,18 @@ class RestIntegBeansConfigSpec extends Specification {
         TestCaseRunner testCaseRunner = beansConfig.configure()
 
         then:
-        testCaseRunner.restClient != null
         testCaseRunner.restIntegrationConfig != null
-        testCaseRunner.report != null
-        testCaseRunner.report.templateLoader != null
-        VelocityContext context = testCaseRunner.report.templateLoader.velocityContext
+        testCaseRunner.testCaseBuilder != null
+        testCaseRunner.testCaseBuilder.testScenarioBuilder != null
+        testCaseRunner.testCaseBuilder.testScenarioBuilder.restClient != null
+        testCaseRunner.testCaseBuilder.testScenarioBuilder.report != null
+        testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader != null
+        VelocityContext context = testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader.velocityContext
         context != null
         context.get("generatedOn") != null
         context.get("version") == "1.2.3"
 
-        VelocityEngine velocityEngine = testCaseRunner.report.templateLoader.velocityEngine
+        VelocityEngine velocityEngine = testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader.velocityEngine
         velocityEngine != null
         velocityEngine.getProperty(RuntimeConstants.RESOURCE_LOADER).toString() == "[classpath]"
         velocityEngine.getProperty("classpath.resource.loader.class") == "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"

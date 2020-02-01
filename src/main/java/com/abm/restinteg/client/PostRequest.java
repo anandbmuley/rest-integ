@@ -7,11 +7,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 public class PostRequest extends HttpRequest {
 
-    public PostRequest(String url) {
-        super(url);
+    public PostRequest(String url, RestTemplate restTemplate) {
+        super(url, restTemplate);
     }
 
     @Override

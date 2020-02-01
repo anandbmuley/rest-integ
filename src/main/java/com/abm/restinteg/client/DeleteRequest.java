@@ -4,6 +4,7 @@ import com.abm.restinteg.models.core.TestScenario;
 import com.abm.restinteg.models.core.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.Map;
@@ -11,8 +12,8 @@ import java.util.Optional;
 
 public class DeleteRequest extends HttpRequest {
 
-    public DeleteRequest(String url) {
-        super(url);
+    public DeleteRequest(String url, RestTemplate restTemplate) {
+        super(url, restTemplate);
     }
 
     @Override

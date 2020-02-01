@@ -5,6 +5,7 @@ import com.abm.restinteg.models.core.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.Map;
@@ -12,8 +13,8 @@ import java.util.Optional;
 
 public class GetRequest extends HttpRequest {
 
-    public GetRequest(String url) {
-        super(url);
+    public GetRequest(String url, RestTemplate restTemplate) {
+        super(url, restTemplate);
     }
 
     @Override

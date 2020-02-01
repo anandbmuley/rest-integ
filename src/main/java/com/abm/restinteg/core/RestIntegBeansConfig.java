@@ -4,6 +4,7 @@ import com.abm.restinteg.client.RestClient;
 import com.abm.restinteg.models.config.RestIntegrationConfig;
 import com.abm.restinteg.reporting.Report;
 import com.abm.restinteg.reporting.TemplateLoader;
+import com.abm.restinteg.validators.ResponseValidator;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
@@ -25,11 +26,13 @@ public class RestIntegBeansConfig {
 
     public TestCaseRunner configure() {
         RestTemplate restTemplate = new RestTemplate();
-        RestClient restClient = new RestClient(restTemplate);
+        RestClient restClient = new RestClient(restTemplate, new ResponseValidator());
         VelocityContext velocityContext = buildContext();
         VelocityEngine velocityEngine = configureVelocityEngine();
         TemplateLoader templateLoader = new TemplateLoader(velocityContext, velocityEngine);
-        return new TestCaseRunner(restClient, restIntegrationConfig, new Report(templateLoader));
+        Report report = new Report(templateLoader);
+        TestCaseBuilder testCaseBuilder = new TestCaseBuilder(new TestScenarioBuilder(report, restClient));
+        return new TestCaseRunner(restIntegrationConfig, testCaseBuilder);
     }
 
     private VelocityContext buildContext() {

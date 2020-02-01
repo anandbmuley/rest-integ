@@ -4,11 +4,12 @@ import com.abm.restinteg.models.core.TestScenario;
 import com.abm.restinteg.models.core.ApiResponse;
 import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 public class PutRequest extends HttpRequest {
 
-    public PutRequest(String url) {
-        super(url);
+    public PutRequest(String url, RestTemplate restTemplate) {
+        super(url, restTemplate);
     }
 
     @Override

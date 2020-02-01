@@ -11,8 +11,8 @@ public abstract class HttpRequest {
     protected RestTemplate restTemplate;
     protected final String url;
 
-    public HttpRequest(String url) {
-        this.restTemplate = new RestTemplate();
+    public HttpRequest(String url, RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
         this.url = url;
     }
 
