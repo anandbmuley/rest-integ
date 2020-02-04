@@ -19,6 +19,7 @@ public class RestIntegrator {
             restIntegBeansConfig = new RestIntegBeansConfig(configFileLoader);
             testCaseRunner = restIntegBeansConfig.configure();
             testCaseRunner.invokeTests();
+            testCaseRunner.generateReport();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getMessage());

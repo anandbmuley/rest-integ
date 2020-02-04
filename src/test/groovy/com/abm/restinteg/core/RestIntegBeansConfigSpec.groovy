@@ -3,6 +3,8 @@ package com.abm.restinteg.core
 import com.abm.restinteg.models.config.ApiTestCaseConfig
 import com.abm.restinteg.models.config.RestIntegrationConfig
 import com.abm.restinteg.models.config.TestScenarioConfig
+import com.abm.restinteg.reporting.Report
+import com.abm.restinteg.reporting.TemplateLoader
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
@@ -40,14 +42,16 @@ class RestIntegBeansConfigSpec extends Specification {
         testCaseRunner.testCaseBuilder != null
         testCaseRunner.testCaseBuilder.testScenarioBuilder != null
         testCaseRunner.testCaseBuilder.testScenarioBuilder.restClient != null
-        testCaseRunner.testCaseBuilder.testScenarioBuilder.report != null
-        testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader != null
-        VelocityContext context = testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader.velocityContext
+        def report = testCaseRunner.report
+        report != null
+        def templateLoader = report.templateLoader
+        templateLoader != null
+        VelocityContext context = templateLoader.velocityContext
         context != null
         context.get("generatedOn") != null
         context.get("version") == "1.2.3"
 
-        VelocityEngine velocityEngine = testCaseRunner.testCaseBuilder.testScenarioBuilder.report.templateLoader.velocityEngine
+        VelocityEngine velocityEngine = templateLoader.velocityEngine
         velocityEngine != null
         velocityEngine.getProperty(RuntimeConstants.RESOURCE_LOADER).toString() == "[classpath]"
         velocityEngine.getProperty("classpath.resource.loader.class") == "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"

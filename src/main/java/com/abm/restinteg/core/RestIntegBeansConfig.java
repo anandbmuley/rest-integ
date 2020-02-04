@@ -31,8 +31,8 @@ public class RestIntegBeansConfig {
         VelocityEngine velocityEngine = configureVelocityEngine();
         TemplateLoader templateLoader = new TemplateLoader(velocityContext, velocityEngine);
         Report report = new Report(templateLoader);
-        TestCaseBuilder testCaseBuilder = new TestCaseBuilder(new TestScenarioBuilder(report, restClient));
-        return new TestCaseRunner(restIntegrationConfig, testCaseBuilder);
+        TestCaseBuilder testCaseBuilder = new TestCaseBuilder(new TestScenarioBuilder(restClient));
+        return new TestCaseRunner(restIntegrationConfig, testCaseBuilder, report);
     }
 
     private VelocityContext buildContext() {

@@ -30,12 +30,11 @@ class RestClientSpec extends Specification {
 
     def "call - should run the test scenario"() {
         given:
-        Report mockReport = Mock()
         RestClient mockRestClient = Mock()
         def basePath = "http://localhost:8080"
         def name = "Should get the customer details successfully"
         def apiName = "Get Customer Details"
-        TestScenario scenario = new TestScenario(name, basePath, mockReport, mockRestClient, apiName)
+        TestScenario scenario = new TestScenario(name, basePath, mockRestClient, apiName)
         scenario.setUrl("/path")
         scenario.setHttpMethod(HttpMethod.GET)
         1 * mockRestTemplate.getForEntity("$basePath/path", String, [:]) >> ResponseEntity.ok().build()

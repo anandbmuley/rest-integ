@@ -3,6 +3,8 @@ package com.abm.restinteg.core
 import com.abm.restinteg.models.config.ApiTestCaseConfig
 import com.abm.restinteg.models.config.RestIntegrationConfig
 import com.abm.restinteg.models.core.TestCase
+import com.abm.restinteg.models.core.TestResult
+import com.abm.restinteg.reporting.Report
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -11,12 +13,17 @@ class TestCaseRunnerSpec extends Specification {
     @Subject
     TestCaseRunner testCaseRunner
 
+    def basePath = "http://localhost:8080"
+
     RestIntegrationConfig mockRestIntegrationConfig
     TestCaseBuilder mockTestCaseBuilder
-    def basePath = "http://localhost:8080"
     TestCase mockTestCase
+    Report mockReport
+    TestResult mockTestResult
 
     void setup() {
+        mockTestResult = Mock()
+        mockReport = Mock()
         mockTestCase = Mock()
         mockTestCaseBuilder = Mock()
         mockRestIntegrationConfig = Mock()
@@ -30,7 +37,7 @@ class TestCaseRunnerSpec extends Specification {
 
     def "prepareTestCases - should build test cases from config"() {
         when:
-        new TestCaseRunner(mockRestIntegrationConfig, mockTestCaseBuilder)
+        new TestCaseRunner(mockRestIntegrationConfig, mockTestCaseBuilder, mockReport)
 
         then:
         1 * mockTestCaseBuilder.build(basePath, { List<ApiTestCaseConfig> it ->
@@ -42,7 +49,7 @@ class TestCaseRunnerSpec extends Specification {
     def "invokeTests - should invoke testcases run method"() {
         given:
         1 * mockTestCaseBuilder.build(basePath, _) >> [mockTestCase]
-        testCaseRunner = new TestCaseRunner(mockRestIntegrationConfig, mockTestCaseBuilder)
+        testCaseRunner = new TestCaseRunner(mockRestIntegrationConfig, mockTestCaseBuilder, mockReport)
 
         when:
         testCaseRunner.invokeTests()

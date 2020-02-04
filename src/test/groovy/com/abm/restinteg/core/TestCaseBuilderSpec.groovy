@@ -35,9 +35,8 @@ class TestCaseBuilderSpec extends Specification {
         def apiTestCaseConfig = restIntegrationConfig.apiTestCaseConfigs[0]
         def apiName = "Get Customer Details"
         def scenarioName = "Should fetch customer details successfully"
-        Report mockReport = Mock()
         RestClient mockRestClient = Mock()
-        TestScenario testScenario = new TestScenario(scenarioName, basePath, mockReport, mockRestClient, apiName)
+        TestScenario testScenario = new TestScenario(scenarioName, basePath, mockRestClient, apiName)
 
         2 * mockTestScenarioBuilder.build(basePath, apiTestCaseConfig, _) >> testScenario
 

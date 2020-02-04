@@ -1,11 +1,8 @@
 package com.abm.restinteg.models.core;
 
 import com.abm.restinteg.client.RestClient;
-import com.abm.restinteg.reporting.Report;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class TestScenario {
@@ -21,17 +18,13 @@ public class TestScenario {
     private ExpectedResponse expectedResponse;
     private RestClient restClient;
 
-    private Report report;
-
-    private List<TestResult> testResults;
+    private TestResult testResult;
 
 
-    public TestScenario(String name, String baseUrl, Report report, RestClient restClient, String apiName) {
+    public TestScenario(String name, String baseUrl, RestClient restClient, String apiName) {
         this.name = name;
         this.baseUrl = baseUrl;
-        testResults = new ArrayList<>();
         this.restClient = restClient;
-        this.report = report;
         this.apiName = apiName;
     }
 
@@ -86,18 +79,19 @@ public class TestScenario {
     public void run() {
         try {
             restClient.call(this).validate(expectedResponse);
-            testResults.add(TestResult.createSuccess(apiName, name, expectedResponse.getBody().orElse(null)));
+            testResult = TestResult.createSuccess(apiName, name);
         } catch (HttpClientErrorException e) {
             if (e.getRawStatusCode() == expectedResponse.getStatusCode()) {
-                testResults.add(TestResult.createSuccess(apiName, name, expectedResponse.getBody().orElse(null)));
+                testResult = TestResult.createSuccess(apiName, name);
             } else {
-                testResults.add(TestResult.createFailure(apiName, name, e.getResponseBodyAsString(), expectedResponse.getBody().orElse(null)));
+                testResult = TestResult.createFailure(apiName, name, e.getResponseBodyAsString(), expectedResponse.getBody().orElse(null));
             }
         } catch (Throwable e) {
-            testResults.add(TestResult.createFailure(apiName, name, e.getMessage(), expectedResponse.getBody().orElse(null)));
+            testResult = TestResult.createFailure(apiName, name, e.getMessage(), expectedResponse.getBody().orElse(null));
         }
-
-        report.generate(testResults);
     }
 
+    public TestResult getTestResult() {
+        return testResult;
+    }
 }

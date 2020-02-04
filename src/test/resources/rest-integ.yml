@@ -1,22 +1,45 @@
-ServiceName: MEROBO Rest API Integration Testing
+ServiceName: Library App Rest API Integration Testing
 Version: 1.2.3
-BasePath: http://localhost:8080/merobo/api
+BasePath: http://localhost:8090/testing-rest/api
 ApiVersion: v3
 
 APIS:
-  - name: Register User
-    path: /auth
+  - name: Add Book
+    path: /books
     method: POST
     tests:
-      - name: Should register user successfully
+      - name: Add book successfully
         request:
-          body: user-register-request.json
+          body: add-book-request.json
         response:
           status: 200
 
-      - name: Should fail if the username is not provided
+      - name: Should fail if book name is not provided
         request:
-          body: user-register-no-username-request.json
+          body: add-book-missing-name-request.json
         response:
           status: 400
-          body: user-registration-no-username-response.json
+          body: add-book-missing-name-response.json
+
+  - name: Update Book Details
+    path: /books
+    method: PUT
+    tests:
+      - name: Should update the book details successfully
+        request:
+          body: update-book-request.json
+        response:
+          status: 204
+
+  - name: Search book by name
+    path: /books/{name}
+    method: GET
+    tests:
+      - name: Should be able to search book by name
+        request:
+          responseIsList: true
+          pathParams:
+            name: Working with Emotional Intelligence
+        response:
+          status: 200
+          body: search-books-response.json

@@ -17,7 +17,7 @@ class ConfigFileLoaderSpec extends Specification {
 
         then:
         restIntegration.serviceName == "MEROBO Rest API Integration Testing"
-        restIntegration.basePath == "http://localhost:8080/merobo/api"
+        restIntegration.basePath == "http://localhost:8090/merobo/api"
     }
 
     def "load - should log an error if config file is not found"() {

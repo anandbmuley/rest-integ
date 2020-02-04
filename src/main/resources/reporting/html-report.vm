@@ -51,7 +51,7 @@
                     ##<td>$foreach.count</td>
                     <td>$result.name</td>
                     <td class="$result.status">$result.status</td>
-                    <td>$!result.expected</td>
+                    <td>$!result.expectedJson</td>
                     <td>$result.message</td>
                 </tr>
                 #end
