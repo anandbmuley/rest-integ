@@ -30,7 +30,7 @@ public class GetRequest extends HttpRequest {
             return ResponseEntity
                     .status(e.getRawStatusCode())
                     .headers(e.getResponseHeaders())
-                    .body(new ApiResponse(null));
+                    .body(new ApiResponse(e.getResponseBodyAsString()));
         }
     }
 

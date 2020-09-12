@@ -1,18 +1,14 @@
 package com.abm.restinteg;
 
 import com.abm.restinteg.shared.StubFileLoader;
+import com.abm.restinteg.shared.ScenarionStubbing;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.stubbing.Scenario;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.util.UriUtils;
-
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RestIntegratorTest {
 
@@ -67,12 +63,45 @@ class RestIntegratorTest {
         );
 
         String searchResponse = stubFileLoader.getResponseFile("search-books-response.json");
-        String encodedURl = UriUtils.encode("/books/Working with Emotional Intelligence", Charset.defaultCharset());
         wireMockServer.stubFor(
-                get(urlEqualTo(BASE_PATH + encodedURl))
+                get(urlEqualTo(BASE_PATH + "/books/Working%20with%20Emotional%20Intelligence"))
+                        .inScenario(ScenarionStubbing.SUCCESSFUL_BOOK_SEARCH)
+                        .whenScenarioStateIs(Scenario.STARTED)
                         .willReturn(
-                                aResponse().withStatus(204)
+                                aResponse().withStatus(200)
                                         .withBody(searchResponse)
+                        )
+                        .willSetStateTo(ScenarionStubbing.STATE_COMPLETED)
+        );
+
+        String notFoundErrorResponse = stubFileLoader.getResponseFile("search-books-not-found-error-response.json");
+        wireMockServer.stubFor(
+                get(urlEqualTo(BASE_PATH + "/books/Mein"))
+                        .inScenario(ScenarionStubbing.SUCCESSFUL_BOOK_SEARCH)
+                        .whenScenarioStateIs(ScenarionStubbing.STATE_COMPLETED)
+                        .willReturn(
+                                aResponse().withStatus(404)
+                                        .withBody(notFoundErrorResponse)
+                        )
+        );
+
+
+        wireMockServer.stubFor(
+                delete(urlEqualTo(BASE_PATH + "/books/1234"))
+                        .inScenario(ScenarionStubbing.SUCCESSFUL_BOOK_DELETE)
+                        .whenScenarioStateIs(Scenario.STARTED)
+                        .willReturn(
+                                aResponse().withStatus(200)
+                        )
+                        .willSetStateTo(ScenarionStubbing.STATE_COMPLETED)
+        );
+
+        wireMockServer.stubFor(
+                delete(urlEqualTo(BASE_PATH + "/books/"))
+                        .inScenario(ScenarionStubbing.SUCCESSFUL_BOOK_DELETE)
+                        .whenScenarioStateIs(ScenarionStubbing.STATE_COMPLETED)
+                        .willReturn(
+                                aResponse().withStatus(200)
                         )
         );
 

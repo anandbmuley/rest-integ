@@ -43,3 +43,26 @@ APIS:
         response:
           status: 200
           body: search-books-response.json
+
+      - name: Should return not found error if no matching books found
+        request:
+          pathParams:
+            name: Mein
+        response:
+          status: 404
+          body: search-books-not-found-error-response.json
+
+  - name: Delete a Book
+    path: /books/{id}
+    method: DELETE
+    tests:
+      - name: Should be able to delete a book matching given Id
+        request:
+          pathParams:
+            id: 1234
+        response:
+          status: 200
+
+      - name: Should be able to delete all
+        response:
+          status: 200
